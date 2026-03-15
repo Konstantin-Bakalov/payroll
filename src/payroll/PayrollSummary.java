@@ -3,6 +3,7 @@ package payroll;
 import employee.Employee;
 import employee.EmployeeRecord;
 import employee.EmployeeType;
+import employee.StrategyFactory;
 
 import java.util.*;
 
@@ -11,20 +12,31 @@ public class PayrollSummary implements Summary {
     private double totalTax = 0;
     private double totalNet = 0;
 
+    private final StrategyFactory strategies;
     private final List<EmployeeRecord> records = new ArrayList<>();
     private final Map<EmployeeType, Integer> employeeCount = new EnumMap<>(EmployeeType.class);
 
-    private void updateTotalCosts(Employee e) {
-        totalGross += e.calculateGrossSalary();
-        totalTax += e.calculateTax();
-        totalNet += e.calculateNetSalary();
+    public PayrollSummary(StrategyFactory strategies) {
+        this.strategies = strategies;
+    }
+
+    private void updateTotalCosts(double gross, double tax, double net) {
+        totalGross += gross;
+        totalTax += tax;
+        totalNet += net;
     }
 
     @Override
     public void addEmployee(Employee e) {
-        updateTotalCosts(e);
         employeeCount.merge(e.getEmployeeType(), 1, Integer::sum);
-        records.add(new EmployeeRecord(e.getName(), e.getEmployeeType(), e.calculateGrossSalary(), e.calculateTax(), e.calculateNetSalary()));
+
+        var strategy = strategies.getStrategyForEmployee(e);
+        var gross = strategy.calculateGross(e);
+        var tax = strategy.calculateTax(e);
+        var net = strategy.calculateNet(e);
+
+        updateTotalCosts(gross, tax, net);
+        records.add(new EmployeeRecord(e.getName(), e.getEmployeeType(), gross, tax, net));
     }
 
     @Override

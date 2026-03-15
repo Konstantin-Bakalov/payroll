@@ -1,11 +1,8 @@
 package employee;
 
 public class ContractorEmployee extends Employee {
-    protected final int HOURS_THRESHOLD = 160;
-    protected final double OVERTIME_RATE = 1.5;
-
-    protected double hourlyRate;
-    protected int hoursWorked;
+    private final double hourlyRate;
+    private final int hoursWorked;
 
     public ContractorEmployee(String name, double hourlyRate, int hoursWorked) {
         super(name);
@@ -22,23 +19,12 @@ public class ContractorEmployee extends Employee {
         this.hoursWorked = hoursWorked;
     }
 
-    @Override
-    public double calculateGrossSalary() {
-        var overtimeHours = calculateOvertimeHours();
-        if (overtimeHours > 0) {
-            return ((overtimeHours * OVERTIME_RATE) + (hoursWorked - overtimeHours)) * hourlyRate;
-        }
-
-        return hourlyRate * hoursWorked;
+    public double getHourlyRate() {
+       return hourlyRate;
     }
 
-    @Override
-    public double calculateTax() {
-        return 0;
-    }
-
-    protected int calculateOvertimeHours() {
-        return Math.max(hoursWorked - HOURS_THRESHOLD, 0);
+    public int getHoursWorked() {
+        return hoursWorked;
     }
 
     @Override

@@ -3,7 +3,7 @@ package formatting;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class CurrencyFormatter implements CurrencyFormatterInterface {
+public class CurrencyFormatter implements Formatter {
 
     private final Locale locale;
 

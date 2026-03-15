@@ -1,23 +1,21 @@
 package logging;
 
-import employee.Employee;
-import formatting.CurrencyFormatterInterface;
-import payroll.Summary;
+import formatting.Formatter;
 
 import java.util.function.Consumer;
 
-public class AuditLogger implements AuditLoggerInterface {
+public class AuditLogger implements Logger {
     private final Consumer<String> consumer;
-    private final CurrencyFormatterInterface formatter;
+    private final Formatter formatter;
 
-    public AuditLogger(Consumer<String> consumer, CurrencyFormatterInterface formatter) {
+    public AuditLogger(Consumer<String> consumer, Formatter formatter) {
         this.consumer = consumer;
         this.formatter = formatter;
     }
 
     @Override
-    public void logEmployeeAdded(Employee employee) {
-        consumer.accept("[audit] Employee added %s".formatted(employee.getName()));
+    public void logEmployeeAdded(String name) {
+        consumer.accept("[audit] Employee added %s".formatted(name));
     }
 
     @Override
@@ -26,12 +24,12 @@ public class AuditLogger implements AuditLoggerInterface {
     }
 
     @Override
-    public void logPayrollEnd(Summary summary) {
-        consumer.accept("[audit] Payroll run finished: %d employees processed".formatted(summary.getAllEmployeeCount()));
+    public void logPayrollEnd(int employeeCount) {
+        consumer.accept("[audit] Payroll run finished: %d employees processed".formatted(employeeCount));
     }
 
     @Override
-    public void logPayComputed(Employee employee) {
-        consumer.accept("[audit] Pay computer for %s : %s".formatted(employee.getName(), formatter.format(employee.calculateNetSalary())));
+    public void logPayComputed(String name, double pay) {
+        consumer.accept("[audit] Pay computer for %s : %s".formatted(name, formatter.format(pay)));
     }
 }

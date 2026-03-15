@@ -1,15 +1,15 @@
 package payroll;
 
 import employee.EmployeeType;
-import formatting.CurrencyFormatterInterface;
+import formatting.Formatter;
 
 import java.util.function.Consumer;
 
 public class PayrollSummaryPrinter {
     private final Consumer<String> consumer;
-    private final CurrencyFormatterInterface formatter;
+    private final Formatter formatter;
 
-    public PayrollSummaryPrinter(Consumer<String> consumer, CurrencyFormatterInterface formatter) {
+    public PayrollSummaryPrinter(Consumer<String> consumer, Formatter formatter) {
         this.consumer = consumer;
         this.formatter = formatter;
     }

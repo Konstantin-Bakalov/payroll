@@ -1,22 +1,31 @@
+import employee.Employee;
+import employee.ContractorEmployee;
+import employee.HourlyEmployee;
+import employee.SalariedEmployee;
+import formatting.CurrencyFormatter;
+import logging.AuditLogger;
+import payroll.PayrollProcessor;
+import payroll.PayrollRunner;
+import payroll.PayrollSummaryPrinter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new SalariedEmployee("Alice", 5000));
+        employees.add(new SalariedEmployee("Alice", 5000));
+        employees.add(new HourlyEmployee("Bob", 50, 80, 0.35));
+        employees.add(new ContractorEmployee("Charlie", 60, 0));
 
-        Employee e1 = new Employee("Alice", "salaried");
-        e1.monthlySalary = 5000;
+        var currencyFormatter = new CurrencyFormatter();
+        var logger = new AuditLogger(System.out::println, currencyFormatter);
+        var processor = new PayrollProcessor();
+        var summary = new PayrollRunner(processor, logger).run(employees);
+        var summaryPrinter = new PayrollSummaryPrinter(System.out::println, currencyFormatter);
 
-        Employee e2 = new Employee("Bob", "contractor");
-        e2.hourlyRate = 50;
-        e2.hoursWorked = 160;
-
-        Employee e3 = new Employee("Charlie", "contractor");
-        e3.hourlyRate = 60;
-        e3.hoursWorked = 0;
-
-        PayrollProcessor.addEmployee(e1);
-        PayrollProcessor.addEmployee(e2);
-        PayrollProcessor.addEmployee(e3);
-
-        PayrollProcessor.processPayroll();
+        summaryPrinter.print(summary);
     }
 }
