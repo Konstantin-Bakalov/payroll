@@ -19,12 +19,27 @@ public class ContractorEmployee extends Employee {
         this.hoursWorked = hoursWorked;
     }
 
-    public double getHourlyRate() {
-       return hourlyRate;
+    protected int calculateOvertimeHours() {
+        final int HOURS_THRESHOLD = 160;
+        return Math.max(hoursWorked - HOURS_THRESHOLD, 0);
     }
 
-    public int getHoursWorked() {
-        return hoursWorked;
+
+    @Override
+    public double calculateGrossSalary() {
+        final double OVERTIME_RATE = 1.5;
+        var overtimeHours = calculateOvertimeHours();
+
+        if (overtimeHours > 0) {
+            return ((overtimeHours * OVERTIME_RATE) + (hoursWorked - overtimeHours)) * hourlyRate;
+        }
+
+        return hourlyRate * hoursWorked;
+    }
+
+    @Override
+    public double calculateTax() {
+        return 0;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package payroll;
 
 import employee.Employee;
-import employee.PayCalculationStrategyFactory;
 import logging.Logger;
 
 import java.util.Collection;
@@ -18,7 +17,7 @@ public class PayrollRunner {
     public Summary run(Collection<Employee> employees) {
         logger.logPayrollStart(employees.size());
 
-        var payrollSummary = processor.generatePayrollSummary(employees, new PayCalculationStrategyFactory());
+        var payrollSummary = processor.generatePayrollSummary(employees);
 
         for (var record : payrollSummary.getEmployeeRecords()) {
             logger.logEmployeeAdded(record.name());

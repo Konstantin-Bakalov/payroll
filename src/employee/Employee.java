@@ -16,4 +16,12 @@ public abstract class Employee {
     }
 
     abstract public EmployeeType getEmployeeType();
+
+    abstract public double calculateGrossSalary();
+
+    public double calculateNetSalary() {
+        return calculateGrossSalary() - calculateTax();
+    }
+
+    abstract public double calculateTax();
 }

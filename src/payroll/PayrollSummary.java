@@ -3,7 +3,6 @@ package payroll;
 import employee.Employee;
 import employee.EmployeeRecord;
 import employee.EmployeeType;
-import employee.StrategyFactory;
 
 import java.util.*;
 
@@ -12,13 +11,8 @@ public class PayrollSummary implements Summary {
     private double totalTax = 0;
     private double totalNet = 0;
 
-    private final StrategyFactory strategies;
     private final List<EmployeeRecord> records = new ArrayList<>();
     private final Map<EmployeeType, Integer> employeeCount = new EnumMap<>(EmployeeType.class);
-
-    public PayrollSummary(StrategyFactory strategies) {
-        this.strategies = strategies;
-    }
 
     private void updateTotalCosts(double gross, double tax, double net) {
         totalGross += gross;
@@ -30,10 +24,9 @@ public class PayrollSummary implements Summary {
     public void addEmployee(Employee e) {
         employeeCount.merge(e.getEmployeeType(), 1, Integer::sum);
 
-        var strategy = strategies.getStrategyForEmployee(e);
-        var gross = strategy.calculateGross(e);
-        var tax = strategy.calculateTax(e);
-        var net = strategy.calculateNet(e);
+        var gross = e.calculateGrossSalary();
+        var tax = e.calculateTax();
+        var net = e.calculateNetSalary();
 
         updateTotalCosts(gross, tax, net);
         records.add(new EmployeeRecord(e.getName(), e.getEmployeeType(), gross, tax, net));
