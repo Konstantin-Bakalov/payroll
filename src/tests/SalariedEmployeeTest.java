@@ -25,35 +25,36 @@ class SalariedEmployeeTest {
 
     @Test
     void testSalariedEmployeeType() {
-        var employee = new SalariedEmployee("SalariedEmployee", 5000);
+        var employee = new SalariedEmployee("Alice", 5000);
         assertEquals(EmployeeType.SALARIED, employee.getEmployeeType());
     }
 
     @Test
     void testCalculateGrossSalary() {
-        var employee = new SalariedEmployee("SalariedEmployee", 5000);
+        var monthlySalary = 5000;
+        var employee = new SalariedEmployee("Alice", monthlySalary);
         var gross = employee.calculateGrossSalary();
-        assertEquals(5000, gross);
+        assertEquals(monthlySalary, gross);
     }
 
     @Test
     void testCalculateTax() {
-        var employee = new SalariedEmployee("SalariedEmployee", 5000);
+        var employee = new SalariedEmployee("Alice", 5000);
         var tax = employee.calculateTax();
         assertEquals(1000, tax);
     }
 
     @Test
-    void testCalculateZeroTax() {
-        var employee = new SalariedEmployee("SalariedEmployee", 0);
+    void testCalculateBigSalaryTax() {
+        var employee = new SalariedEmployee("Alice", 1_500_000);
         var tax = employee.calculateTax();
-        assertEquals(0, tax);
+        assertEquals(300_000, tax);
     }
 
     @Test
-    void testCalculateMaxTax() {
-        var employee = new SalariedEmployee("SalariedEmployee", Double.MAX_VALUE);
+    void testCalculateZeroTax() {
+        var employee = new SalariedEmployee("Alice", 0);
         var tax = employee.calculateTax();
-        assertEquals(employee.calculateGrossSalary() * employee.getTaxRate(), tax);
+        assertEquals(0, tax);
     }
 }

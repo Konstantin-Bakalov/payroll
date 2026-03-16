@@ -31,7 +31,7 @@ public class ContractorEmployee extends Employee {
         var overtimeHours = calculateOvertimeHours();
 
         if (overtimeHours > 0) {
-            return ((overtimeHours * OVERTIME_RATE) + (hoursWorked - overtimeHours)) * hourlyRate;
+            return (overtimeHours * OVERTIME_RATE) * hourlyRate + (hoursWorked - overtimeHours) * hourlyRate;
         }
 
         return hourlyRate * hoursWorked;
