@@ -1,7 +1,8 @@
 package employee;
 
 public class SalariedEmployee extends Employee {
-    private final double monthlySalary;
+    private final double FIXED_TAX_RATE = 0.2;
+    private double monthlySalary;
 
     public SalariedEmployee(String name, double monthlySalary) {
         super(name);
@@ -13,6 +14,10 @@ public class SalariedEmployee extends Employee {
         this.monthlySalary = monthlySalary;
     }
 
+    public double getTaxRate() {
+        return FIXED_TAX_RATE;
+    }
+
     @Override
     public double calculateGrossSalary() {
         return monthlySalary;
@@ -20,7 +25,6 @@ public class SalariedEmployee extends Employee {
 
     @Override
     public double calculateTax() {
-        final double FIXED_TAX_RATE = 0.2;
         return calculateGrossSalary() * FIXED_TAX_RATE;
     }
 

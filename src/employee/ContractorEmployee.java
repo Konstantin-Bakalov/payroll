@@ -1,8 +1,8 @@
 package employee;
 
 public class ContractorEmployee extends Employee {
-    private final double hourlyRate;
-    private final int hoursWorked;
+    private double hourlyRate;
+    private int hoursWorked;
 
     public ContractorEmployee(String name, double hourlyRate, int hoursWorked) {
         super(name);

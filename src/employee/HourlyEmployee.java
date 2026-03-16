@@ -1,7 +1,7 @@
 package employee;
 
 public class HourlyEmployee extends ContractorEmployee {
-    private final double taxRate;
+    private double taxRate;
 
     public HourlyEmployee(String name, double hourlyRate, int hoursWorked, double taxRate) {
         super(name, hourlyRate, hoursWorked);
