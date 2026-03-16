@@ -1,0 +1,12 @@
+FROM eclipse-temurin:25-jdk
+
+WORKDIR /app
+
+COPY src ./src
+
+ADD https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.11.4/junit-platform-console-standalone-1.11.4.jar /app/junit-platform-console-standalone.jar
+
+RUN find src -name "*.java" > sources.txt && \
+    javac -cp /app/junit-platform-console-standalone.jar -d out @sources.txt
+
+CMD ["java", "-jar", "/app/junit-platform-console-standalone.jar", "--class-path", "out", "--scan-class-path"]
