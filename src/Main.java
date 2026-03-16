@@ -4,8 +4,8 @@ import employee.HourlyEmployee;
 import employee.SalariedEmployee;
 import formatting.CurrencyFormatter;
 import logging.AuditLogger;
+import payroll.PayrollLogger;
 import payroll.PayrollProcessor;
-import payroll.PayrollRunner;
 import payroll.PayrollSummaryPrinter;
 
 import java.util.ArrayList;
@@ -22,8 +22,9 @@ public class Main {
 
         var currencyFormatter = new CurrencyFormatter();
         var logger = new AuditLogger(System.out::println, currencyFormatter);
-        var processor = new PayrollProcessor();
-        var summary = new PayrollRunner(processor, logger).run(employees);
+        var payrollLogger = new PayrollLogger(logger);
+        var summary = new PayrollProcessor().generatePayrollSummary(employees);
+        payrollLogger.log(summary);
         var summaryPrinter = new PayrollSummaryPrinter(System.out::println, currencyFormatter);
 
         summaryPrinter.print(summary);
