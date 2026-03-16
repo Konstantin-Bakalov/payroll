@@ -8,6 +8,11 @@
 `
 - Run the image: `docker run --rm payroll-java25`
 
+- Create an image for the tests: `docker build -f Dockerfile.tests -t payroll-tests .`
+
+- Run the image: `docker run --rm payroll-tests`
+
+
 ## Run using IntellijIDEA
 
 - Load the payroll/ dir in Intellij
