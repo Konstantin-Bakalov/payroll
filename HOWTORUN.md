@@ -22,3 +22,5 @@
 - Set the SDK to openjdk-24 (Oracle OpenJDK 24.0.1)
 
 - Apply the changes
+
+- If you want to run the tests, you have to make sure JUnit is available
