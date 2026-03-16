@@ -61,4 +61,13 @@ public class PayrollSummaryTest {
         assertEquals(alice.calculateTax(), summary.getTotalTax());
         assertEquals(alice.calculateNetSalary(), summary.getTotalNet());
     }
+
+    @Test
+    void testNotAddedTypes() {
+        var summary = new PayrollSummary();
+        summary.addEmployee(alice);
+
+       assertEquals(0, summary.getEmployeeCount(EmployeeType.CONTRACTOR)) ;
+        assertEquals(0, summary.getEmployeeCount(EmployeeType.HOURLY)) ;
+    }
 }
